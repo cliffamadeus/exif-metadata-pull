@@ -41,13 +41,6 @@ function fetchWeather(lat, lon, timestamp) {
     }
 }
 
-document.getElementById('latitudeInput').addEventListener('change', () => {
-    const lat = document.getElementById('latitudeInput').value;
-    const lon = document.getElementById('longitudeInput').value;
-    fetchWeather(lat, lon);
-});
-
-
 function handleImageInput(input) {
     const img = document.getElementById("imagePreview");
     img.style.display = 'block';
