@@ -1,17 +1,35 @@
 const apiKey = 'b32786b808e33a9e3d7051cd1a10ad6f'; // Replace with your OpenWeather API key
 
-function fetchWeather(lat, lon) {
-    if (lat && lon) {
-        fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`)
+function fetchWeather(lat, lon, timestamp) {
+    if (lat !== '' && lon !== '') {
+        let apiUrl;
+        if (timestamp) {
+            apiUrl = `https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=${lat}&lon=${lon}&dt=${timestamp}&appid=${apiKey}&units=metric`;
+        } else {
+            apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
+        }
+
+        fetch(apiUrl)
             .then(response => response.json())
             .then(data => {
-                const weatherInfo = `
-                    <p><strong>Location:</strong> ${data.name}</p>
-                    <p><strong>Temperature:</strong> ${data.main.temp}°C</p>
-                    <p><strong>Weather:</strong> ${data.weather[0].description}</p>
-                    <p><strong>Humidity:</strong> ${data.main.humidity}%</p>
-                    <p><strong>Wind Speed:</strong> ${data.wind.speed} m/s</p>
-                `;
+                let weatherInfo;
+                if (timestamp) {
+                    weatherInfo = `
+                        <p><strong>Date:</strong> ${new Date(timestamp * 1000).toLocaleDateString()}</p>
+                        <p><strong>Temperature:</strong> ${data.current.temp}°C</p>
+                        <p><strong>Weather:</strong> ${data.current.weather[0].description}</p>
+                        <p><strong>Humidity:</strong> ${data.current.humidity}%</p>
+                        <p><strong>Wind Speed:</strong> ${data.current.wind_speed} m/s</p>
+                    `;
+                } else {
+                    weatherInfo = `
+                        <p><strong>Location:</strong> ${data.name}</p>
+                        <p><strong>Temperature:</strong> ${data.main.temp}°C</p>
+                        <p><strong>Weather:</strong> ${data.weather[0].description}</p>
+                        <p><strong>Humidity:</strong> ${data.main.humidity}%</p>
+                        <p><strong>Wind Speed:</strong> ${data.wind.speed} m/s</p>
+                    `;
+                }
                 document.getElementById('weatherInfo').innerHTML = weatherInfo;
             })
             .catch(error => {
@@ -29,11 +47,6 @@ document.getElementById('latitudeInput').addEventListener('change', () => {
     fetchWeather(lat, lon);
 });
 
-document.getElementById('longitudeInput').addEventListener('change', () => {
-    const lat = document.getElementById('latitudeInput').value;
-    const lon = document.getElementById('longitudeInput').value;
-    fetchWeather(lat, lon);
-});
 
 function handleImageInput(input) {
     const img = document.getElementById("imagePreview");
@@ -57,13 +70,17 @@ function handleImageInput(input) {
         document.getElementById('latitudeInput').value = lat;
         document.getElementById('longitudeInput').value = lon;
 
-        fetchWeather(lat, lon);
-
         // Get and display the DateTimeOriginal
         var dateTimeOriginal = EXIF.getTag(this, "DateTimeOriginal");
         if (dateTimeOriginal) {
             const formattedDate = formatDate(dateTimeOriginal);
             document.getElementById("dateTime").innerText = formattedDate;
+
+            // Convert dateTimeOriginal to Unix timestamp
+            const timestamp = new Date(dateTimeOriginal).getTime() / 1000;
+
+            // Call fetchWeather with latitude, longitude, and timestamp
+            fetchWeather(lat, lon, timestamp);
         } else {
             document.getElementById("dateTime").innerText = "No date available";
         }
