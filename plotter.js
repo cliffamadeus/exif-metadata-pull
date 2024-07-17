@@ -17,46 +17,46 @@ function fetchWeather(lat, lon, timestamp) {
                     weatherInfo = `
                         <div class="form-group mb-3">
                             <label>Date:</label>
-                            <input type="text" class="form-control" value="${new Date(timestamp * 1000).toLocaleDateString()}" readonly disabled>
+                            <input type="text" class="form-control" name="date"  value="${new Date(timestamp * 1000).toLocaleDateString()}" readonly disabled>
                         </div>
                         <div class="form-group mb-3">
                             <label>Temperature:</label>
-                            <input type="text" class="form-control" value="${data.current.temp}°C" readonly disabled>
+                            <input type="text" class="form-control"  name="temp" value="${data.current.temp}°C" readonly disabled>
                         </div>
                         <div class="form-group mb-3">
                             <label>Weather:</label>
-                            <input type="text" class="form-control" value="${data.current.weather[0].description}" readonly disabled>
+                            <input type="text" class="form-control" name="weather" value="${data.current.weather[0].description}" readonly disabled>
                         </div>
                         <div class="form-group mb-3">
                             <label>Humidity:</label>
-                            <input type="text" class="form-control" value="${data.current.humidity}%" readonly disabled>
+                            <input type="text" class="form-control"  name="hum" value="${data.current.humidity}%" readonly disabled>
                         </div>
                         <div class="form-group">
                             <label>Wind Speed:</label>
-                            <input type="text" class="form-control" value="${data.current.wind_speed} m/s" readonl disabled>
+                            <input type="text" class="form-control"  name="wind_speed" value="${data.current.wind_speed} m/s" readonly disabled>
                         </div>
                     `;
                 } else {
                     weatherInfo = `
-                        <div class="form-group mb-3">
-                            <label>Location:</label>
-                            <input type="text" class="form-control" value="${data.name}" readonly disabled>
+                         <div class="form-group mb-3">
+                            <label>Date:</label>
+                            <input type="text" class="form-control" name="date"  value="${new Date(timestamp * 1000).toLocaleDateString()}" readonly disabled>
                         </div>
                         <div class="form-group mb-3">
                             <label>Temperature:</label>
-                            <input type="text" class="form-control" value="${data.main.temp}°C" readonly disabled>
+                            <input type="text" class="form-control"  name="temp" value="${data.current.temp}°C" readonly disabled>
                         </div>
                         <div class="form-group mb-3">
                             <label>Weather:</label>
-                            <input type="text" class="form-control" value="${data.weather[0].description}" readonly disabled>
-                        </div>
-                       <div class="form-group mb-3">
-                            <label>Humidity:</label>
-                            <input type="text" class="form-control" value="${data.main.humidity}%" readonly disabled>
+                            <input type="text" class="form-control" name="weather" value="${data.current.weather[0].description}" readonly disabled>
                         </div>
                         <div class="form-group mb-3">
+                            <label>Humidity:</label>
+                            <input type="text" class="form-control"  name="hum" value="${data.current.humidity}%" readonly disabled>
+                        </div>
+                        <div class="form-group">
                             <label>Wind Speed:</label>
-                            <input type="text" class="form-control" value="${data.wind.speed} m/s" readonly disabled>
+                            <input type="text" class="form-control"  name="wind_speed" value="${data.current.wind_speed} m/s" readonly disabled>
                         </div>
                     `;
                 }

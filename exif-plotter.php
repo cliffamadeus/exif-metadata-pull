@@ -1,3 +1,50 @@
+<?php
+// Include config file
+require_once "config.php";
+
+// Processing form data when form is submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    // Prepare an insert statement
+    $sql = "INSERT INTO records (record_lat, record_lon, record_date, record_temp, record_weather, record_hum, record_wind_speed) 
+            VALUES (:record_lat, :record_lon, :record_date, :record_temp, :record_weather, :record_hum, :record_wind_speed)";
+
+    if ($stmt = $pdo->prepare($sql)) {
+        // Bind variables to the prepared statement as parameters
+        $stmt->bindParam(":record_lat", $param_lat);
+        $stmt->bindParam(":record_lon", $param_lon);
+        $stmt->bindParam(":record_date", $param_date);
+        $stmt->bindParam(":record_temp", $param_temp);
+        $stmt->bindParam(":record_weather", $param_weather);
+        $stmt->bindParam(":record_hum", $param_hum);
+        $stmt->bindParam(":record_wind_speed", $param_wind_speed);
+
+        // Set parameters
+        $param_lat = $_POST['lat'];
+        $param_lon = $_POST['lon'];
+        $param_date = $_POST['date'];
+        $param_temp = $_POST['temp'];
+        $param_weather = $_POST['weather'];
+        $param_hum = $_POST['hum'];
+        $param_wind_speed = $_POST['wind_speed'];
+
+        // Attempt to execute the prepared statement
+        if ($stmt->execute()) {
+            // Records created successfully. Redirect to landing page
+            header("location: index.php");
+            exit();
+        } else {
+            echo "Oops! Something went wrong. Please try again later.";
+        }
+    }
+
+    // Close statement
+    unset($stmt);
+}
+
+// Close connection
+unset($pdo);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,7 +59,7 @@
         .home-flex-container {
             display: flex;
             justify-content: start;
-            gap: 2rem; 
+            gap: 2rem;
         }
         .modal-backdrop.show {
             background-color: rgba(0, 0, 0, 0.5);
@@ -53,27 +100,25 @@
                 <br>
                 <input type="file" id="imageInput" class="form-control" onchange="handleImageInput(this);" />
                 <div class="mt-3">
-                    
-                    <form>
-                    <div class="form-group mb-3">
-                        <label for="latitudeInput">Latitude</label>
-                        <input type="text" class="form-control" id="latitudeInput" readonly disabled>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label for="longitudeInput">Longitude</label>
-                        <input type="text" class="form-control" id="longitudeInput" readonly disabled>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label for="dateTime">Datetime</label>
-                        <input type="text" class="form-control" id="dateTime" readonly disabled>
-                    </div>
+                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                        <div class="form-group mb-3">
+                            <label for="latitudeInput">Latitude</label>
+                            <input type="text" class="form-control" id="latitudeInput" name="lat" readonly disabled>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="longitudeInput">Longitude</label>
+                            <input type="text" class="form-control" id="longitudeInput" name="lon" readonly disabled>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="dateTime">Datetime</label>
+                            <input type="text" class="form-control" id="dateTime" name="date" readonly disabled>
+                        </div>
                         <div id="weatherInfo" class="mt-3"></div>
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                             Save Data
                         </button>
-                        <button id="clearButton" class="btn btn-secondary">Clear</button>
+                        <button id="clearButton" class="btn btn-secondary" type="button">Clear</button>
                     </form>
-                   
                 </div>
             </div>
         </div>
@@ -83,21 +128,21 @@
 
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-        <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Upload Details?</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to save the data?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="submitForm()">Save changes</button>
+                </div>
+            </div>
         </div>
-        <div class="modal-body">
-           Upload Details?
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary"  data-bs-dismiss="modal">Save changes</button>
-        </div>
-        </div>
-    </div>
     </div>
 
 
@@ -121,36 +166,129 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary"  data-bs-dismiss="modal">Agree</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Agree</button>
                 </div>
             </div>
         </div>
     </div>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    var myModalElement = document.getElementById('welcomeModal');
-    var myModal = new bootstrap.Modal(myModalElement, { keyboard: false });
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var myModalElement = document.getElementById('welcomeModal');
+        var myModal = new bootstrap.Modal(myModalElement, { keyboard: false });
 
-    document.getElementById('modalTriggerBtn').addEventListener('click', function() {
+        document.getElementById('modalTriggerBtn').addEventListener('click', function() {
+            myModal.show();
+        });
+
+        document.querySelector('.btn-close').addEventListener('click', function() {
+            myModal.hide();
+        });
+
+        document.querySelector('.btn-secondary').addEventListener('click', function() {
+            myModal.hide();
+        });
+
         myModal.show();
     });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById("clearButton").addEventListener("click", function() {
+                document.getElementById("imageInput").value = "";
+                document.getElementById("imagePreview").src = "https://www.freeiconspng.com/uploads/no-image-icon-6.png";
+                document.getElementById("latitudeInput").value = "";
+                document.getElementById("longitudeInput").value = "";
+                document.getElementById("dateTime").value = "";
+                document.getElementById("weatherInfo").innerHTML = "";
+                document.getElementById("latitudeInput").disabled = true;
+                document.getElementById("longitudeInput").disabled = true;
+                document.getElementById("dateTime").disabled = true;
+            });
+        });
 
-    document.querySelector('#welcomeModal .btn-primary').addEventListener('click', function() {
-        console.log('User agreed.');
-        myModal.hide();
-    });
+        function handleImageInput(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById("imagePreview").src = e.target.result;
+                    EXIF.getData(input.files[0], function() {
+                        var lat = EXIF.getTag(this, "GPSLatitude");
+                        var lon = EXIF.getTag(this, "GPSLongitude");
+                        var date = EXIF.getTag(this, "DateTimeOriginal");
 
-    myModalElement.addEventListener('hidden.bs.modal', function () {
-        var backdrop = document.querySelector('.modal-backdrop');
-        if (backdrop) {
-            backdrop.remove();
+                        if (lat && lon) {
+                            var latRef = EXIF.getTag(this, "GPSLatitudeRef") || "N";
+                            var lonRef = EXIF.getTag(this, "GPSLongitudeRef") || "W";
+                            lat = (lat[0] + lat[1] / 60 + lat[2] / 3600) * (latRef === "N" ? 1 : -1);
+                            lon = (lon[0] + lon[1] / 60 + lon[2] / 3600) * (lonRef === "W" ? -1 : 1);
+
+                            document.getElementById("latitudeInput").value = lat;
+                            document.getElementById("longitudeInput").value = lon;
+                            document.getElementById("latitudeInput").disabled = false;
+                            document.getElementById("longitudeInput").disabled = false;
+
+                            // Fetch weather data using coordinates
+                            fetchWeatherData(lat, lon);
+                        } else {
+                            document.getElementById("latitudeInput").value = "No GPS data";
+                            document.getElementById("longitudeInput").value = "No GPS data";
+                        }
+
+                        if (date) {
+                            document.getElementById("dateTime").value = date;
+                            document.getElementById("dateTime").disabled = false;
+                        } else {
+                            document.getElementById("dateTime").value = "No date data";
+                        }
+                    });
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
         }
-    });
-});
 
-</script>
+        function fetchWeatherData(lat, lon) {
+            var apiKey = 'b32786b808e33a9e3d7051cd1a10ad6f';
+            var apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
 
-<script src="plotter.js"></script>
-
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.cod === 200) {
+                        var weatherDescription = data.weather[0].description;
+                        var temperature = data.main.temp;
+                        var humidity = data.main.humidity;
+                        var windSpeed = data.wind.speed;
+                        var weatherInfoHtml = `
+                            <div class="form-group mb-3">
+                                <label for="temp">Temperature</label>
+                                <input type="text" class="form-control" id="temp" name="temp" value="${temperature} °C" readonly>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="weather">Weather</label>
+                                <input type="text" class="form-control" id="weather" name="weather" value="${weatherDescription}" readonly>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="hum">Humidity</label>
+                                <input type="text" class="form-control" id="hum" name="hum" value="${humidity}%" readonly>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="wind_speed">Wind Speed</label>
+                                <input type="text" class="form-control" id="wind_speed" name="wind_speed" value="${windSpeed} m/s" readonly>
+                            </div>
+                        `;
+                        document.getElementById("weatherInfo").innerHTML = weatherInfoHtml;
+                    } else {
+                        document.getElementById("weatherInfo").innerHTML = `<p>Error fetching weather data</p>`;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching weather data:', error);
+                    document.getElementById("weatherInfo").innerHTML = `<p>Error fetching weather data</p>`;
+                });
+        }
+        function submitForm() {
+            document.querySelector('form').submit();
+        }
+    </script>
 </body>
 </html>
