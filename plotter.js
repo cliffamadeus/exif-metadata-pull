@@ -1,24 +1,3 @@
-document.addEventListener('DOMContentLoaded', function() {
-    var myModalElement = document.getElementById('welcomeModal');
-    var myModal = new bootstrap.Modal(myModalElement, { keyboard: false });
-
-    document.getElementById('modalTriggerBtn').addEventListener('click', function() {
-        myModal.show();
-    });
-
-    document.querySelector('#welcomeModal .btn-primary').addEventListener('click', function() {
-        console.log('User agreed.');
-        myModal.hide();
-    });
-
-    myModalElement.addEventListener('hidden.bs.modal', function () {
-        var backdrop = document.querySelector('.modal-backdrop');
-        if (backdrop) {
-            backdrop.remove();
-        }
-    });
-});
-
 const apiKey = 'b32786b808e33a9e3d7051cd1a10ad6f'; // Replace with your OpenWeather API key
 
 function fetchWeather(lat, lon, timestamp) {

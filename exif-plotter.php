@@ -22,15 +22,12 @@
 
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">Navbar</a>
+        <a class="navbar-brand" href="index.php">Home</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
-                <li class="nav-item active">
-                    <a class="nav-link" href="index.php" aria-current="page">Home</a>
-                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="./exif-weather.php">Weather</a>
                 </li>
@@ -56,6 +53,7 @@
                 <br>
                 <input type="file" id="imageInput" class="form-control" onchange="handleImageInput(this);" />
                 <div class="mt-3">
+                    
                     <form>
                     <div class="form-group mb-3">
                         <label for="latitudeInput">Latitude</label>
@@ -128,7 +126,31 @@
             </div>
         </div>
     </div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var myModalElement = document.getElementById('welcomeModal');
+    var myModal = new bootstrap.Modal(myModalElement, { keyboard: false });
 
-    <script src="plotter.js"></script>
+    document.getElementById('modalTriggerBtn').addEventListener('click', function() {
+        myModal.show();
+    });
+
+    document.querySelector('#welcomeModal .btn-primary').addEventListener('click', function() {
+        console.log('User agreed.');
+        myModal.hide();
+    });
+
+    myModalElement.addEventListener('hidden.bs.modal', function () {
+        var backdrop = document.querySelector('.modal-backdrop');
+        if (backdrop) {
+            backdrop.remove();
+        }
+    });
+});
+
+</script>
+
+<script src="plotter.js"></script>
+
 </body>
 </html>
