@@ -57,7 +57,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Weather</h5>
                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="./exif-weather.html" class="btn btn-primary">Go</a>
+                    <a href="./exif-weather.php" class="btn btn-primary">Go</a>
                 </div>
             </div>
 
@@ -66,7 +66,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Map Plotter</h5>
                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-primary">Go</a>
+                    <a href="exif-plotter.php" class="btn btn-primary">Go</a>
                 </div>
             </div>
         </div>
