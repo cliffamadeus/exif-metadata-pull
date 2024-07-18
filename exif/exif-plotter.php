@@ -1,6 +1,6 @@
 <?php
 // Include config file
-require_once "config.php";
+require_once "config-live.php";
 
 // Processing form data when form is submitted
 $form_submitted = false;
