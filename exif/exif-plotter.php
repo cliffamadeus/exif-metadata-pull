@@ -1,6 +1,6 @@
 <?php
 // Include config file
-require_once "config-live.php";
+require_once "config.php";
 
 // Processing form data when form is submitted
 $form_submitted = false;
@@ -123,6 +123,10 @@ unset($pdo);
                             <label for="dateTime">Datetime</label>
                             <input type="text" class="form-control" id="dateTime" name="date" readonly disabled>
                         </div>
+                        <div class="form-group mb-3">
+                            <label for="altitudeInput">Elevation (MASL)</label>
+                            <input type="text" class="form-control" id="altitudeInput" name="altitude" readonly disabled>
+                        </div>
                         <div id="weatherInfo" class="mt-3"></div>
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                             Save Data
@@ -244,6 +248,15 @@ function handleImageInput(input) {
                     document.getElementById("longitudeInput").value = "No GPS data";
                 }
 
+                // Capture and display Altitude (Elevation) if available
+                var altitude = EXIF.getTag(this, "GPSAltitude");
+                if (altitude !== undefined) {
+                    document.getElementById("altitudeInput").value = altitude;
+                    document.getElementById("altitudeInput").disabled = false;
+                } else {
+                    document.getElementById("altitudeInput").value = "No altitude data";
+                }
+
                 if (date) {
                     document.getElementById("dateTime").value = date;
                     document.getElementById("dateTime").disabled = false;
@@ -255,6 +268,7 @@ function handleImageInput(input) {
         reader.readAsDataURL(input.files[0]);
     }
 }
+
 
 function fetchWeatherData(lat, lon) {
     var apiKey = 'b32786b808e33a9e3d7051cd1a10ad6f';
