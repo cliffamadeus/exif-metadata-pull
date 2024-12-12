@@ -81,6 +81,7 @@ function handleImageInput(input) {
     reader.readAsDataURL(input.files[0]);
 
     EXIF.getData(input.files[0], function () {
+        // Get GPS Latitude and Longitude
         var gpsData = EXIF.getTag(this, "GPSLatitude") || [];
         var lat = gpsData[0] + gpsData[1] / 60 + gpsData[2] / 3600;
         var gpsDataLon = EXIF.getTag(this, "GPSLongitude") || [];
@@ -89,6 +90,16 @@ function handleImageInput(input) {
         document.getElementById('latitudeInput').value = lat;
         document.getElementById('longitudeInput').value = lon;
 
+        // Get GPS Altitude (elevation)
+        var altitude = EXIF.getTag(this, "GPSAltitude");
+        if (altitude !== undefined) {
+            // Check if altitude is in meters or feet (usually meters)
+            document.getElementById('altitudeInput').value = altitude;
+        } else {
+            document.getElementById('altitudeInput').value = "No altitude data available";
+        }
+
+        // Get DateTimeOriginal from EXIF metadata
         var dateTimeOriginal = EXIF.getTag(this, "DateTimeOriginal");
         if (dateTimeOriginal) {
             const formattedDate = formatDate(dateTimeOriginal);
@@ -101,6 +112,7 @@ function handleImageInput(input) {
         }
     });
 }
+
 
 function formatDate(dateTimeString) {
     const [date, time] = dateTimeString.split(' ');
