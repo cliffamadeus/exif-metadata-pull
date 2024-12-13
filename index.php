@@ -60,12 +60,12 @@
         <div class="home-flex-container mt-4">
                 
             <div class="card" style="width: 18rem;">
-                <a href="./exif-weather.php" style="text-decoration: none; color:black">
+                <a href="./exif-basic.php" style="text-decoration: none; color:black">
                     <img src="https://www.svgrepo.com/show/502423/weather.svg" class="img" alt="...">
                     <div class="card-body">
                     <h5 class="card-title">EXIF Weather Integration</h5>
                     <p class="card-text">Basic implementation of EXIF and Openweather</p>
-                    <a href="exif-plotter.php" style="margin-top: 10px;"class="btn btn-primary">Go</a>
+                    <a href="./exif-basic.php" style="margin-top: 10px;"class="btn btn-primary">Go</a>
                     </div>
                 </a>
             </div>
