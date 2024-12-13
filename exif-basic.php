@@ -67,119 +67,102 @@
         </div>
     </div>
 </nav>
-<div class="container" style="margin-top: 2rem;">
-    <div class="row mb-4">
-        <!-- Image Upload Section -->
-        <div class="col-md-3">
-            <button id="clearButton" class="btn btn-secondary" type="button">Reset</button>
-            <br>
-            <img id="imagePreview" style="margin-top:20px" src="https://www.freeiconspng.com/uploads/no-image-icon-6.png" width="200px">
-            <input type="file" id="imageInput" class="form-control" style="width:75%; margin-top:10px;" onchange="handleImageInput(this);" />
-        </div>
 
-        <!-- Image Data and Map Section -->
-        <div class="col-md-9">
-            <div class="container mt-4">
-                <!-- Image Data Card -->
-                <div class="card mb-4">
-                    <div class="card-header bg-primary text-white">
-                        <h5 class="card-title mb-0">Image Data</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <!-- EXIF Data Column -->
-                            <div class="col-md-6">
-                                <h5>EXIF Data</h5>
-                                <hr>
+    <div class="container" style="margin-top: 2rem;">
+        <div class="row mb-4">
+            <!-- Image Upload Section -->
+            <div class="col-md-3">
+                <button id="clearButton" class="btn btn-secondary" type="button">Reset</button>
+                <br>
+                <img id="imagePreview" style="margin-top:20px" src="https://www.freeiconspng.com/uploads/no-image-icon-6.png" width="200px">
+                <input type="file" id="imageInput" class="form-control" style="width:75%; margin-top:10px;" onchange="handleImageInput(this);" />
+            </div>
+            <!-- Image Data and Map Section -->
+            <div class="col-md-9">
+                <div class="container mt-4">
+                    <!-- Image Data Card -->
+                    <div class="card mb-4">
+                        <div class="card-header text-bg-light">
+                            <div class="row">
                                 <div class="col">
-                                <h6>Coordinates</h6>
-                                <div class="row">
-                                    <div class="col">
-                                        <strong>Latitude:</strong>
-                                        <p id="latitudeData">No GPS data</p>
-                                    </div>
-                                    <div class="col">
-                                        <strong>Longitude:</strong>
-                                        <p id="longitudeData">No GPS data</p>
-                                    </div>
+                                    <h5 class="card-title mb-0">Image Data</h5>
                                 </div>
-
-                                </div>
-                                <div class="col">
-
-                                    <div class="row">
-                                        <div class="col">
-                                            <strong>Approximate Location</strong>
-                                            <p id="locData">Fetching location...</p>
-                                        </div>
-                                        <div class="col">
-                                            <strong>Altitude (masl):</strong>
-                                            <p id="altitudeData">No altitude data</p>
-                                        </div>
-                                    </div>
-
-
-
-
-                                 
-                                </div>
-                               
-                            </div>
-
-                            <!-- Weather Data Column -->
-                            <div class="col-md-6">
-                                <h5>History Weather Data</h5>
-                                <hr>
-                                <div class="col">
-                                    
-                                    <div class="row">
-                                        <div class="col">
-                                            <strong>Temperature:</strong>
-                                            <p id="tempData">Fetching temperature...</p>
-                                        </div>
-                                        <div class="col">
-                                            <strong>Weather</strong>
-                                            <p id="weatherData">Fetching weather data</p>
-                                        </div>
-                                    </div>
-
-
-                                    
-
-
-
-                                   
-                                </div>
-                                <div class="col">
-                                    <div class="row">
-                                        <div class="col">
-                                            <strong>Humidity</strong>
-                                            <p id="humData">Fetching humidity data</p>
-                                        </div>
-                                        <div class="col">
-                                        <strong>Wind Speed</strong>
-                                        <p id="wind_speedData">Fetching wind speed data</p>
-                                        </div>
-                                    </div>
-                                   
-                                </div>
-                              
                             </div>
                         </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <!-- EXIF Data Column -->
+                                <div class="col-md-6">
+                                    <h5>EXIF Data</h5>
+                                    <hr>
+                                    <div class="col">
+                                        <div class="row">
+                                            <div class="col">
+                                                <strong>Latitude:</strong>
+                                                <p id="latitudeData">No GPS data</p>
+                                            </div>
+                                            <div class="col">
+                                                <strong>Longitude:</strong>
+                                                <p id="longitudeData">No GPS data</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="row">
+                                            <div class="col">
+                                                <strong>Approximate Location</strong>
+                                                <p id="locData">Fetching location...</p>
+                                            </div>
+                                            <div class="col">
+                                                <strong>Altitude (masl):</strong>
+                                                <p id="altitudeData">No altitude data</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Weather Data Column -->
+                                <div class="col-md-6">
+                                    <h5>History Weather Data</h5>
+                                    <hr>
+                                    <div class="col">
+                                        <div class="row">
+                                            <div class="col">
+                                                <strong>Temperature:</strong>
+                                                <p id="tempData">Fetching temperature...</p>
+                                            </div>
+                                            <div class="col">
+                                                <strong>Weather</strong>
+                                                <p id="weatherData">Fetching weather data</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="row">
+                                            <div class="col">
+                                                <strong>Humidity</strong>
+                                                <p id="humData">Fetching humidity data</p>
+                                            </div>
+                                            <div class="col">
+                                                <strong>Wind Speed</strong>
+                                                <p id="wind_speedData">Fetching wind speed data</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class=" text-body-secondary text-center">
+                            <small class="text-body-secondary text-white" id="dateTimeData">No date data</small>
+                        </div>
+
+                        <!-- Map Section --> 
+                        <div id="map" class="mt-4" style="height: 400px;"></div>
                     </div>
-                    <div class="card-footer">
-        <small class="text-body-secondary" id="dateTimeData"></small>
-      </div>
-
                 </div>
-
-                <!-- Map Section -->
-                <div id="map" class="mt-4" style="height: 400px;"></div>
             </div>
         </div>
-
     </div>
-</div>
 
     <script>
         // Leaflet map setup
@@ -244,7 +227,7 @@
 
                             // Create a new marker with a popup that will open automatically
                             marker = L.marker([lat, lon]).addTo(myMap)
-                                .bindPopup(`<b>Latitude:</b> ${lat}<br><b>Longitude:</b> ${lon}<br><b>Date:</b> ${date}`)
+                                .bindPopup(`<b>Latitude:</b> ${lat}<br><b>Longitude:</b> ${lon}<br><b>Date:</b> ${formatDate(date)}`)
                                 .openPopup();  // Open the popup immediately
 
                             // Center the map on the new coordinates
@@ -264,42 +247,8 @@
 
                         // Capture and display date
                         if (date) {
-                            // Debugging step: print the raw date string
-                            console.log("Raw EXIF Date:", date);
-
-                            // Fixing the format of the date string: Replace ':' with '-' for the date part, and leave the time part
-                            const dateParts = date.split(" "); // Split date and time
-                            const dateFormatted = dateParts[0].replace(/:/g, '-'); // Replace ':' with '-' in the date
-                            const timeFormatted = dateParts[1]; // Leave time part as is
-
-                            // Combine into ISO format: YYYY-MM-DDTHH:MM:SS
-                            const isoFormattedDate = `${dateFormatted}T${timeFormatted}`;
-
-                            // Debugging step: print the formatted ISO date
-                            console.log("ISO Date Format:", isoFormattedDate);
-
-                            // Create a Date object from the ISO string
-                            const formattedDate = new Date(isoFormattedDate);
-
-                            // Check if the date is valid
-                            if (isNaN(formattedDate.getTime())) {
-                                document.getElementById("dateTimeData").textContent = "Invalid date";
-                                console.log("Error: Invalid Date");
-                            } else {
-                                // Format the date to a readable string
-                                const readableDate = formattedDate.toLocaleString('en-US', {
-                                    weekday: 'long', // Full weekday name
-                                    year: 'numeric', // Full year
-                                    month: 'long', // Full month name
-                                    day: 'numeric', // Day of the month
-                                    hour: 'numeric', // Hour (12-hour format)
-                                    minute: 'numeric', // Minute
-                                    second: 'numeric', // Second
-                                    hour12: true // 12-hour format with AM/PM
-                                });
-
-                                document.getElementById("dateTimeData").textContent = readableDate;
-                            }
+                            const readableDate = formatDate(date);
+                            document.getElementById("dateTimeData").textContent = readableDate;
                         } else {
                             document.getElementById("dateTimeData").textContent = "No date data";
                         }
@@ -309,6 +258,38 @@
                 reader.readAsDataURL(input.files[0]);
             }
         }
+
+        // Helper function to format the EXIF date string
+        function formatDate(date) {
+            // Split the date and time from the EXIF string
+            const dateParts = date.split(" "); // Split date and time
+            const dateFormatted = dateParts[0].replace(/:/g, '-'); // Replace ':' with '-' in the date
+            const timeFormatted = dateParts[1]; // Leave time part as is
+
+            // Combine into ISO format: YYYY-MM-DDTHH:MM:SS
+            const isoFormattedDate = `${dateFormatted}T${timeFormatted}`;
+
+            // Create a Date object from the ISO string
+            const formattedDate = new Date(isoFormattedDate);
+
+            // Check if the date is valid
+            if (isNaN(formattedDate.getTime())) {
+                return "Invalid date";
+            } else {
+                // Format the date to a readable string
+                return formattedDate.toLocaleString('en-US', {
+                    weekday: 'long', // Full weekday name
+                    year: 'numeric', // Full year
+                    month: 'long', // Full month name
+                    day: 'numeric', // Day of the month
+                    hour: 'numeric', // Hour (12-hour format)
+                    minute: 'numeric', // Minute
+                    second: 'numeric', // Second
+                    hour12: true // 12-hour format with AM/PM
+                });
+            }
+        }
+
 
 
 
