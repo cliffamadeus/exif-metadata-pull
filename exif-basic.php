@@ -106,42 +106,71 @@
 
                                 </div>
                                 <div class="col">
-                                    <h6>Approximate Location</h6>
-                                    <p id="locData">Fetching location...</p>
+
+                                    <div class="row">
+                                        <div class="col">
+                                            <strong>Approximate Location</strong>
+                                            <p id="locData">Fetching location...</p>
+                                        </div>
+                                        <div class="col">
+                                            <strong>Altitude (masl):</strong>
+                                            <p id="altitudeData">No altitude data</p>
+                                        </div>
+                                    </div>
+
+
+
+
+                                 
                                 </div>
-                                <div class="col">
-                                    <strong>Altitude (masl):</strong>
-                                    <p id="altitudeData">No altitude data</p>
-                                </div>
-                                <div class="col">
-                                    <strong>Date Recorded:</strong>
-                                    <p id="dateTimeData">No date data</p>
-                                </div>
+                               
                             </div>
 
                             <!-- Weather Data Column -->
                             <div class="col-md-6">
-                                <h5>Weather Data</h5>
+                                <h5>History Weather Data</h5>
                                 <hr>
                                 <div class="col">
-                                    <strong>Temperature:</strong>
-                                    <p id="tempData">Fetching temperature...</p>
+                                    
+                                    <div class="row">
+                                        <div class="col">
+                                            <strong>Temperature:</strong>
+                                            <p id="tempData">Fetching temperature...</p>
+                                        </div>
+                                        <div class="col">
+                                            <strong>Weather</strong>
+                                            <p id="weatherData">Fetching weather data</p>
+                                        </div>
+                                    </div>
+
+
+                                    
+
+
+
+                                   
                                 </div>
                                 <div class="col">
-                                    <strong>Weather</strong>
-                                    <p id="weatherData">Fetching weather data</p>
+                                    <div class="row">
+                                        <div class="col">
+                                            <strong>Humidity</strong>
+                                            <p id="humData">Fetching humidity data</p>
+                                        </div>
+                                        <div class="col">
+                                        <strong>Wind Speed</strong>
+                                        <p id="wind_speedData">Fetching wind speed data</p>
+                                        </div>
+                                    </div>
+                                   
                                 </div>
-                                <div class="col">
-                                    <strong>Humidity</strong>
-                                    <p id="humData">Fetching humidity data</p>
-                                </div>
-                                <div class="col">
-                                    <strong>Wind Speed</strong>
-                                    <p id="wind_speedData">Fetching wind speed data</p>
-                                </div>
+                              
                             </div>
                         </div>
                     </div>
+                    <div class="card-footer">
+        <small class="text-body-secondary" id="dateTimeData"></small>
+      </div>
+
                 </div>
 
                 <!-- Map Section -->
@@ -158,7 +187,7 @@
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> | CAFE'
         }).addTo(myMap);
 
         // Marker object
