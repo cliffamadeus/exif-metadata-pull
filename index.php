@@ -17,6 +17,11 @@
         .modal-backdrop.show {
             background-color: rgba(0, 0, 0, 0.5);
         }
+
+        .img{
+            width: 100px;
+            height: 100px;
+        }
     </style>
 </head>
 
@@ -46,28 +51,35 @@
 <body>
    
     <div class="container mt-4">
-        <!-- Button to trigger modal -->
+        <!-- Button to trigger modal 
         <button type="button" class="btn btn-secondary mt-3 text-white" id="modalTriggerBtn" data-bs-toggle="modal" data-bs-target="#welcomeModal">
             Show Website Usage Policy
         </button>
+        -->
 
         <div class="home-flex-container mt-4">
+                
             <div class="card" style="width: 18rem;">
-                <img src="https://www.svgrepo.com/show/502423/weather.svg" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Weather</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="./exif-weather.php" class="btn btn-primary">Go</a>
-                </div>
+                <a href="./exif-weather.php" style="text-decoration: none; color:black">
+                    <img src="https://www.svgrepo.com/show/502423/weather.svg" class="img" alt="...">
+                    <div class="card-body">
+                    <h5 class="card-title">EXIF Weather Integration</h5>
+                    <p class="card-text">Basic implementation of EXIF and Openweather</p>
+                    <a href="exif-plotter.php" style="margin-top: 10px;"class="btn btn-primary">Go</a>
+                    </div>
+                </a>
             </div>
 
+
             <div class="card" style="width: 18rem;">
-                <img src="https://www.svgrepo.com/show/502421/news.svg" class="card-img-top" alt="...">
+                <a href="./exif-weather.php" style="text-decoration: none; color:black">
+                <img src="https://www.svgrepo.com/show/502421/news.svg" class="img" alt="...">
                 <div class="card-body">
-                    <h5 class="card-title">Map Plotter</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <h5 class="card-title">EXIF Weather Integration - Database</h5>
+                    <p class="card-text">This applet lets you save your input on a database</p>
                     <a href="exif-plotter.php" class="btn btn-primary">Go</a>
                 </div>
+                </a>
             </div>
         </div>
     </div>
