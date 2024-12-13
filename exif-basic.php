@@ -46,57 +46,115 @@
 </head>
 
 <body>
-    <div class="container" style="margin-top: 2rem;">
-        <div class="row mb-4">
-            <div class="col-md-4" class="img-upload-flex">
-                <img id="imagePreview" src="https://www.freeiconspng.com/uploads/no-image-icon-6.png" width="200px">
-                <input type="file" id="imageInput" class="form-control" style="width:75%; margin-top:10px;" onchange="handleImageInput(this);" />
-
-                <h5 class="card-title">Image EXIF Data</h5>
-                <br>
-                <div class="data-section">
-                    <h5>Latitude:</h5>
-                    <p id="latitudeData">No GPS data</p>
-
-                    <h5>Longitude:</h5>
-                    <p id="longitudeData">No GPS data</p>
-
-                    <h5>Altitude (masl):</h5>
-                    <p id="altitudeData">No altitude data</p>
-
-                    <h5>Date Recorded:</h5>
-                    <p id="dateTimeData">No date data</p>
-                </div>
-
-                <div id="weatherInfo" class="data-section">
-                    <h5>Location:</h5>
-                    <p id="locData">Fetching location...</p>
-
-                    <h5>Temperature:</h5>
-                    <p id="tempData">Fetching temperature...</p>
-
-                    <h5>Weather:</h5>
-                    <p id="weatherData">Fetching weather...</p>
-
-                    <h5>Humidity:</h5>
-                    <p id="humData">Fetching humidity...</p>
-
-                    <h5>Wind Speed:</h5>
-                    <p id="wind_speedData">Fetching wind speed...</p>
-                </div>
-                
-                <button id="clearButton" class="btn btn-secondary" type="button">Clear</button>
-            </div>
-            
-            <div class="col-md-8">
-                <div id="map"></div>
-            </div>
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="index.php">Home</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="./exif-basics.php">Basics</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./exif-plotter.php">Plotter</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#welcomeModal">Privacy Policy</a>
+                </li>
+            </ul>
         </div>
     </div>
+</nav>
+<div class="container" style="margin-top: 2rem;">
+    <div class="row mb-4">
+        <!-- Image Upload Section -->
+        <div class="col-md-3">
+            <button id="clearButton" class="btn btn-secondary" type="button">Reset</button>
+            <br>
+            <img id="imagePreview" style="margin-top:20px" src="https://www.freeiconspng.com/uploads/no-image-icon-6.png" width="200px">
+            <input type="file" id="imageInput" class="form-control" style="width:75%; margin-top:10px;" onchange="handleImageInput(this);" />
+        </div>
+
+        <!-- Image Data and Map Section -->
+        <div class="col-md-9">
+            <div class="container mt-4">
+                <!-- Image Data Card -->
+                <div class="card mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="card-title mb-0">Image Data</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <!-- EXIF Data Column -->
+                            <div class="col-md-6">
+                                <h5>EXIF Data</h5>
+                                <hr>
+                                <div class="col">
+                                <h6>Coordinates</h6>
+                                <div class="row">
+                                    <div class="col">
+                                        <strong>Latitude:</strong>
+                                        <p id="latitudeData">No GPS data</p>
+                                    </div>
+                                    <div class="col">
+                                        <strong>Longitude:</strong>
+                                        <p id="longitudeData">No GPS data</p>
+                                    </div>
+                                </div>
+
+                                </div>
+                                <div class="col">
+                                    <h6>Approximate Location</h6>
+                                    <p id="locData">Fetching location...</p>
+                                </div>
+                                <div class="col">
+                                    <strong>Altitude (masl):</strong>
+                                    <p id="altitudeData">No altitude data</p>
+                                </div>
+                                <div class="col">
+                                    <strong>Date Recorded:</strong>
+                                    <p id="dateTimeData">No date data</p>
+                                </div>
+                            </div>
+
+                            <!-- Weather Data Column -->
+                            <div class="col-md-6">
+                                <h5>Weather Data</h5>
+                                <hr>
+                                <div class="col">
+                                    <strong>Temperature:</strong>
+                                    <p id="tempData">Fetching temperature...</p>
+                                </div>
+                                <div class="col">
+                                    <strong>Weather</strong>
+                                    <p id="weatherData">Fetching weather data</p>
+                                </div>
+                                <div class="col">
+                                    <strong>Humidity</strong>
+                                    <p id="humData">Fetching humidity data</p>
+                                </div>
+                                <div class="col">
+                                    <strong>Wind Speed</strong>
+                                    <p id="wind_speedData">Fetching wind speed data</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Map Section -->
+                <div id="map" class="mt-4" style="height: 400px;"></div>
+            </div>
+        </div>
+
+    </div>
+</div>
 
     <script>
         // Leaflet map setup
-        const myMap = L.map('map').setView([8.360004, 124.868419], 18);  // Initial center position
+        const myMap = L.map('map').setView([11.635230398105993, 123.70790316297406], 5);  // Initial center position
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
@@ -154,11 +212,14 @@
                             if (marker) {
                                 myMap.removeLayer(marker);  // Remove previous marker
                             }
+
+                            // Create a new marker with a popup that will open automatically
                             marker = L.marker([lat, lon]).addTo(myMap)
-                                .bindPopup(`<b>Latitude:</b> ${lat}<br><b>Longitude:</b> ${lon}<br><b>Date:</b> ${date}`);
+                                .bindPopup(`<b>Latitude:</b> ${lat}<br><b>Longitude:</b> ${lon}<br><b>Date:</b> ${date}`)
+                                .openPopup();  // Open the popup immediately
 
                             // Center the map on the new coordinates
-                            myMap.setView([lat, lon], 18);  // Set zoom level to 18
+                            myMap.setView([lat, lon], 12);  // Set zoom level to 12 (can adjust as needed)
                         } else {
                             document.getElementById("latitudeData").textContent = "No GPS data";
                             document.getElementById("longitudeData").textContent = "No GPS data";
@@ -183,6 +244,7 @@
                 reader.readAsDataURL(input.files[0]);
             }
         }
+
 
         // Fetch weather data based on latitude and longitude
         function fetchWeatherData(lat, lon) {
