@@ -264,15 +264,52 @@
 
                         // Capture and display date
                         if (date) {
-                            document.getElementById("dateTimeData").textContent = date;
+                            // Debugging step: print the raw date string
+                            console.log("Raw EXIF Date:", date);
+
+                            // Fixing the format of the date string: Replace ':' with '-' for the date part, and leave the time part
+                            const dateParts = date.split(" "); // Split date and time
+                            const dateFormatted = dateParts[0].replace(/:/g, '-'); // Replace ':' with '-' in the date
+                            const timeFormatted = dateParts[1]; // Leave time part as is
+
+                            // Combine into ISO format: YYYY-MM-DDTHH:MM:SS
+                            const isoFormattedDate = `${dateFormatted}T${timeFormatted}`;
+
+                            // Debugging step: print the formatted ISO date
+                            console.log("ISO Date Format:", isoFormattedDate);
+
+                            // Create a Date object from the ISO string
+                            const formattedDate = new Date(isoFormattedDate);
+
+                            // Check if the date is valid
+                            if (isNaN(formattedDate.getTime())) {
+                                document.getElementById("dateTimeData").textContent = "Invalid date";
+                                console.log("Error: Invalid Date");
+                            } else {
+                                // Format the date to a readable string
+                                const readableDate = formattedDate.toLocaleString('en-US', {
+                                    weekday: 'long', // Full weekday name
+                                    year: 'numeric', // Full year
+                                    month: 'long', // Full month name
+                                    day: 'numeric', // Day of the month
+                                    hour: 'numeric', // Hour (12-hour format)
+                                    minute: 'numeric', // Minute
+                                    second: 'numeric', // Second
+                                    hour12: true // 12-hour format with AM/PM
+                                });
+
+                                document.getElementById("dateTimeData").textContent = readableDate;
+                            }
                         } else {
                             document.getElementById("dateTimeData").textContent = "No date data";
                         }
+
                     });
                 };
                 reader.readAsDataURL(input.files[0]);
             }
         }
+
 
 
         // Fetch weather data based on latitude and longitude
